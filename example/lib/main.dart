@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:localize/localize.dart';
 
-void main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   localizeState.init(
     content: {
       "en": {
