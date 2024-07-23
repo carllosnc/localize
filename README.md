@@ -1,5 +1,6 @@
 # Localize
 
+![Static Badge](https://img.shields.io/badge/Flutter-blue)
 [![Localize](https://github.com/carllosnc/localize/actions/workflows/dart.yml/badge.svg)](https://github.com/carllosnc/localize/actions/workflows/dart.yml)
 
 > Localize is a package that allows you to easily translate your Flutter app.
