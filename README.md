@@ -1,5 +1,7 @@
 # Localize
 
+[![Localize](https://github.com/carllosnc/localize/actions/workflows/dart.yml/badge.svg)](https://github.com/carllosnc/localize/actions/workflows/dart.yml)
+
 > Localize is a package that allows you to easily translate your Flutter app.
 
 The main motivation for this package was creating a simple and easy way to translate legacy Flutter apps. So, which would be the better solution to apply translations to hundreds of hardcoded strings? Happily Dart provides a fantastic feature for this problem, [Extension methods in Dart](https://dart.dev/guides/language/extension-methods) is a simple way to add methods to an existing class without modifying the class itself.
