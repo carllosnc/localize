@@ -120,9 +120,17 @@ class _MainAppState extends State<MainApp> with LocalizeMixin {
 
 **`localizeState`**: is the core of the package, it's a singleton that will be used to manage the translations.
 
-**`localizeState.init(content: Map<String, Map<String, String>>)`**: is the method that will be called to initialize the translations.
+**`localizeState.init(content)`**: is the method that will be called to initialize the translations.
 
-**`localizeState.setLanguage(String language)`**: is the method that will be called to change the current language.
+| Parameter | Type                                 | Description                                    |
+| --------- | ------------------------------------ | ---------------------------------------------- |
+| content   | `: Map<String, Map<String, String>>` | A map with the languages and the translations. |
+
+**`localizeState.setLanguage(language)`**: is the method that will be called to change the current language.
+
+| Parameter | Type     | Description       |
+| --------- | -------- | ----------------- |
+| language  | `String` | The new language. |
 
 **`localizeState.languages`**: is a list of all the available languages.
 
