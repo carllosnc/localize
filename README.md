@@ -53,7 +53,7 @@ void main() async {
       },
       "pt-BR": {
         "Hello world": "Olá mundo",
-        "It's a test": "É uma teste",
+        "It's a test": "É um teste",
         "Click me!": "Clique aqui!",
       },
     },
