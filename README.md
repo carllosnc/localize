@@ -116,35 +116,38 @@ class _MainAppState extends State<MainApp> with LocalizeMixin {
 
 ## Details
 
-**LocalizeState**
+### LocalizeState
 
-`localizeState`:
-is the core of the package, it's a singleton that will be used to manage the translations.
+The core singleton class that manages translations.
 
-`localizeState.init(content)`: is the method that will be called to initialize the translations.
+#### Methods
 
-| Parameter | Type                               | Description                                    |
-| --------- | ---------------------------------- | ---------------------------------------------- |
-| content   | `Map<String, Map<String, String>>` | A map with the languages and the translations. |
+- **init(content)**
+  - Description: Initializes the translations
+  - Parameter: `content` (`Map<String, Map<String, String>>`) - Languages and translations map
 
-`localizeState.setLanguage(language)`: is the method that will be called to change the current language.
+- **setLanguage(language)**
+  - Description: Changes the current language
+  - Parameter: `language` (`String`) - The new language to set
 
-| Parameter | Type     | Description       |
-| --------- | -------- | ----------------- |
-| language  | `String` | The new language. |
+#### Properties
 
-`localizeState.languages`: is a list of all the available languages.
+- **languages**
+  - Type: `List<String>`
+  - Description: Available languages list
 
-`localizeState.currentLanguage`: is the current language that is being used.
+- **currentLanguage**
+  - Type: `String`
+  - Description: Currently active language
 
-**LocalizeMixin**
+### LocalizeMixin
 
-`LocalizeMixin`: is a mixin that will be used to automatically translate the text in the `build` method.
+A mixin for automatic text translation in `build` method.
 
-**localize**
+### Extension Methods
 
-`String.localize`: is the method that will be called to translate the text.
-
----
+- **localize**
+  - Type: `String` extension
+  - Description: Translates a string to the current language
 
 Carlos Costa @ 2024
