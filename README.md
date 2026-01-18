@@ -3,42 +3,47 @@
 ![Static Badge](https://img.shields.io/badge/Flutter-blue)
 [![Localize](https://github.com/carllosnc/localize/actions/workflows/dart.yml/badge.svg)](https://github.com/carllosnc/localize/actions/workflows/dart.yml)
 
-> Localize is a package that allows you to easily translate your Flutter app.
+> **Localize** makes translating your Flutter app simple and intuitive.
 
-The main motivation for this package is to create a simple and easy way to translate legacy Flutter apps. So, which would be the better solution to apply translations to hundreds of hardcoded strings? Fortunately, Dart provides a fantastic feature for this problem: [Extension methods in Dart](https://dart.dev/guides/language/extension-methods) is a simple way to add methods to an existing class without modifying the class itself.
+Translating an existing app with hundreds of hardcoded strings can be a daunting task. **Localize** solves this using [Dart Extension Methods](https://dart.dev/guides/language/extension-methods), allowing you to add translation capabilities to your strings without modifying the underlying class structure.
 
-**Example:**
+**Quick Example:**
 
 ```dart
 Text('Hello world'.localize);
-// pt-BR: "Olá mundo",
-// es: "Hola mundo"
+// Result based on active language:
+// pt-BR: "Olá mundo"
+// es:    "Hola mundo"
+// en:    "Hello world"
 ```
 
-If the language is set to "pt-BR", the result will be "Olá mundo", if the language is set to "es", the result will be "Hola mundo" and so on. It's simple and easy to read and maintain.
+It is clean, readable, and easy to maintain.
 
-## Install
+## Installation
 
-This is a unpublished package, so you need to add it to your `pubspec.yaml` file.
+Since this package is not yet published on pub.dev, add it to your `pubspec.yaml` using the git repository:
 
-```yml
+```yaml
 dependencies:
   localize:
     git:
       url: https://github.com/carllosnc/localize.git
 ```
 
-To more information about unplublished packages, see: https://dart.dev/tools/pub/package-layout#unpublished-packages
+For more details on git dependencies, see the [Dart documentation](https://dart.dev/tools/pub/package-layout#unpublished-packages).
 
-## 1 - Initialize
+## 1. Initialize
 
-The first step is calling the `init` method from the `localizeState` object. This method requires a `Map` with the languages and the translations.
+Start by initializing the `localizeState` singleton with your supported languages and translations. This is typically done in your `main()` function.
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:localize/localize.dart';
 
 void main() async {
+  // Ensure widgets are initialized if you are doing async work before runApp
+  WidgetsFlutterBinding.ensureInitialized();
+
   localizeState.init(
     content: {
       "en": {
@@ -63,9 +68,11 @@ void main() async {
 }
 ```
 
-## 2 - Set languages
+## 2. Switch Languages
 
-Now we will create a `DropdownButton` to translate our app. The `localizeState` object has a `languages` property that contains all the available languages, we can use it to create the `DropdownButton`, `currentLanguage` is the current language that is being used and `setLanguage` is a method that changes the current language.
+You can easily switch languages using `localizeState.setLanguage`. The package automatically handles persistence using `SharedPreferences`, so the user's choice is remembered across restarts.
+
+Here is an example using a `DropdownButton`:
 
 ```dart
 DropdownButtonHideUnderline(
@@ -79,6 +86,7 @@ DropdownButtonHideUnderline(
     }).toList(),
     onChanged: (String? newValue) {
       if (newValue != null) {
+        // This updates the language and rebuilds listeners
         localizeState.setLanguage(newValue);
       }
     },
@@ -86,11 +94,9 @@ DropdownButtonHideUnderline(
 ),
 ```
 
-## 3 - Using translations
+## 3. Apply Translations
 
-To see the translations in action we need to use the `LocalizeMixin` on our `StatefulWidget`. This mixin will automatically translate the text in the `build` method.
-
-To use the `localize` method just call `.localize` on any `String` and it will return the translated text.
+To make your UI reactive to language changes, add the `LocalizeMixin` to your `StatefulWidget`'s State. Then, simply append `.localize` to any string you want to translate.
 
 ```dart
 class MainApp extends StatefulWidget {
@@ -100,12 +106,14 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
+// Add the mixin here
 class _MainAppState extends State<MainApp> with LocalizeMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Center(
+          // The text will update automatically when language changes
           child: Text('Hello world'.localize),
         ),
       ),
@@ -114,40 +122,32 @@ class _MainAppState extends State<MainApp> with LocalizeMixin {
 }
 ```
 
-## Details
+## API Details
 
 ### LocalizeState
 
-The core singleton class that manages translations.
+The singleton that manages the application's translation state.
 
 #### Methods
 
-- **init(content)**
-  - Description: Initializes the translations
-  - Parameter: `content` (`Map<String, Map<String, String>>`) - Languages and translations map
+- **`init({required Map<String, Map<String, String>> content})`**
+  Initializes the translation data. It checks `SharedPreferences` for a previously saved language preference.
 
-- **setLanguage(language)**
-  - Description: Changes the current language
-  - Parameter: `language` (`String`) - The new language to set
+- **`setLanguage(String language)`**
+  Sets the active language, updates `currentLanguage`, saves the preference, and notifies listeners.
 
 #### Properties
 
-- **languages**
-  - Type: `List<String>`
-  - Description: Available languages list
-
-- **currentLanguage**
-  - Type: `String`
-  - Description: Currently active language
+- **`languages`** (`List<String>`): A list of available language codes (keys from the content map).
+- **`currentLanguage`** (`String`): The currently active language code.
 
 ### LocalizeMixin
 
-A mixin for automatic text translation in `build` method.
+A generic mixin for `StatefulWidget`. It subscribes to `localizeState` changes and triggers a `setState` call whenever the language is updated, ensuring the UI reflects the new translations immediately.
 
-### Extension Methods
+### Extension: `String.localize`
 
-- **localize**
-  - Type: `String` extension
-  - Description: Translates a string to the current language
+The magic behind the syntax. It looks up the string in the active language map. If a translation is found, it is returned; otherwise, the original string is used.
 
+---
 Carlos Costa @ 2024
