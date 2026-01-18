@@ -62,7 +62,7 @@ class _MyWidgetState extends State<MyWidget> with LocalizeMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       // 2. Use .localize on strings
-      body: Text("Hello".localize), 
+      body: Text("Hello".localize),
     );
   }
 }
