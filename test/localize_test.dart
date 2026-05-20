@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:localize/localize.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-main() {
+void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
